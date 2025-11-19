@@ -1,4 +1,78 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap");
+
+/*
+CSS selectors Crash Course:
+- Universal selector (*)
+selects all elements
+
+- Type selector (element)
+selects all elements of a given type
+
+- Class selector (.class)
+selects all elements with a given class
+
+- ID selector (#id)
+selects a single element with a given ID, stronger specificity than class selector
+
+- Attribute selector ([attr=value])
+selects all elements with a given attribute and value
+eg: input[type="text"]{...}
+
+- Pseudo-class selector (:hover, :focus, :nth-child(), etc)
+:hover
+makes styles when the user hovers over an element with a pointing device.
+
+:active
+makes styles when the user clicks on an element.
+
+:focus
+makes styles when the user focuses on an element.
+
+:checked
+makes styles when a checkbox or radio button is checked.
+
+:first-child
+selects the first child element of its parent.
+
+:nth-child(n)
+selects the nth child element of its parent.
+
+- Pseudo-element selector (::before, ::after, etc)
+
+::before
+makes styles for a virtual element inserted before the content of an element.
+eg:
+element::before {
+  content: "Hello";
+}
+
+::after
+makes styles for a virtual element inserted after the content of an element.
+eg
+element::after {
+  content: "World";
+}
+
+::first-letter
+styles the first letter of the selected element.
+
+
+::first-line
+styles the first line of the selected element.
+
+::selection
+styles the portion of an element that is selected by the user.
+
+- Combinators (descendant, child (>), adjacent sibling (+), general sibling (~))
+- Grouping selector (,)
+
+Specificity weight:
+When two selectors target the same element, CSS decides using specificity.
+1.Inline styles (strongest)
+2.IDs
+3.Classes, pseudo-classes, attribute selectors
+4.Elements, pseudo-elements (weakest
+*/
 
 * {
   margin: 0;
@@ -11,7 +85,7 @@ html {
 }
 
 body {
-  font-family: 'Roboto Mono', sans-serif;
+  font-family: "Roboto Mono", sans-serif;
   color: #252525;
   font-weight: 400;
   background-color: #f7f2e9;
@@ -55,7 +129,7 @@ body {
 .header h1::before,
 .header h1::after {
   display: block;
-  content: '';
+  content: "";
   height: 3px;
   width: 12rem;
   background-color: #edc84b;
