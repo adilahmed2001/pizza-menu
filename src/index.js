@@ -95,18 +95,46 @@ function Header() {
 }
 
 // react expects a key element to optimize list rendering
-
+// we use map method as it returns array and react knows how to render them
 function Menu() {
+  // do not render if we do not have any pizzas
+  const pizzas = pizzaData;
+  //const pizzas = 0;
+  const pizzaCount = pizzas.length;
+
   return (
     <main className="menu">
       <h2>Our Menu</h2>
 
-      <ul className="pizzas">
-        {" "}
-        {pizzaData.map((pizza) => (
-          <Pizza pizzaObj={pizza} key={pizza.name} />
-        ))}{" "}
-      </ul>
+      {
+        // true and false do not render hence pizzaCount > 0 if we only use pizzaCount react will render the number 0 as output if no pizzas are present
+        //pizzaCount > 0 &&
+
+        pizzaCount > 0 ? (
+          /*<p>
+        Authentic Italian Cuisine. 6 creative dishes to chose from. All from out
+        stone oven, all delicious.
+      </p>
+      JSX elements must have one parent element
+      A piece of JSX no matter werever defined must have only one root element
+      */
+          // fragement is using <> </>, html renders p seperately in this case not wrapped with anything
+          // if we want to pass a key for example inlist we can use React.Fragment
+          <React.Fragment>
+            <p>
+              Authentic Italian Cuisine. 6 creative dishes to chose from. All
+              from out stone oven, all delicious.
+            </p>
+
+            <ul className="pizzas">
+              {" "}
+              {pizzas.map((pizza) => (
+                <Pizza pizzaObj={pizza} key={pizza.name} />
+              ))}{" "}
+            </ul>
+          </React.Fragment>
+        ) : null
+      }
 
       {/*<Pizza
         name="Pizza Spinaci"
@@ -122,17 +150,23 @@ function Menu() {
 
 //all images  and assets go into public and the module bundler automatically get s it from there
 // we have to mention alt prop otherwise it shows warning
-function Pizza(props) {
-  console.log(props);
+// use destructuring for props
+//function Pizza(props) {
+
+function Pizza({ pizzaObj }) {
+  console.log(pizzaObj);
+
+  //if (props.pizzaObj.soldOut) return null;
+
   return (
-    <div className="pizza">
-      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
-      <li>
-        <h3>{props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.ingredients}</p>
-        <span>{props.pizzaObj.price}</span>
-      </li>
-    </div>
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
+      <div>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}</span>
+      </div>
+    </li>
   );
 }
 
@@ -142,7 +176,7 @@ function Footer() {
   // {} power of combingng java script into the html
   const hour = new Date().getHours();
   const openHour = 12;
-  const closeHour = 24;
+  const closeHour = 22;
   // we get alert twice because we are using strict mode and strict mode react renders components twice.
 
   /*if (hour >= openHour && hour <= closeHour) {
@@ -155,10 +189,48 @@ function Footer() {
   const isOpen = hour >= openHour && hour <= closeHour;
   console.log(isOpen);
 
-  return (
+  /*return (
     <footer className="footer">
       {new Date().toLocaleTimeString()}. We're currenlty open
     </footer>
+  );*/
+  // short circuiting is if first part is falsy the secind part wont even execute
+  // order only if opened
+  /*if (!isOpen) {
+    return <p>Closed</p>;
+  }*/
+
+  return (
+    <footer className="footer">
+      {
+        /*isOpen && (
+        <div className="order">
+          <p>We're Open until {closeHour}:00. Come visit us or order online.</p>
+          <button className="btn">order</button>
+        </div>
+      )*/
+
+        isOpen ? (
+          <Order openHour={openHour} closeHour={closeHour} />
+        ) : (
+          <p>
+            We're happy to welcome you between {openHour}:00 and {closeHour}:00.
+          </p>
+        )
+      }
+    </footer>
+  );
+}
+
+function Order({ closeHour, openHour }) {
+  return (
+    <div className="order">
+      <p>
+        We're Open from {openHour}:00 until {closeHour}:00. Come visit us or
+        order online.
+      </p>
+      <button className="btn">order</button>
+    </div>
   );
 }
 
